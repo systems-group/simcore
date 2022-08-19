@@ -1,11 +1,13 @@
 use std::collections::{BinaryHeap, HashSet};
 
 use rand::distributions::uniform::{SampleRange, SampleUniform};
+use rand::distributions::{Alphanumeric, DistString};
 use rand::prelude::*;
 use rand_pcg::Pcg64;
 
 use crate::component::Id;
 use crate::event::{Event, EventData, EventId};
+use crate::log::log_incorrect_event;
 
 pub struct SimulationState {
     clock: f64,
@@ -46,14 +48,14 @@ impl SimulationState {
         dist.sample(&mut self.rand)
     }
 
+    pub fn random_string(&mut self, len: usize) -> String {
+        Alphanumeric.sample_string(&mut self.rand, len)
+    }
+
     pub fn add_event<T>(&mut self, data: T, src: Id, dest: Id, delay: f64) -> EventId
     where
         T: EventData,
     {
-        assert!(
-            delay >= 0.0,
-            "Event delay is negative! It is not allowed to add events from the past."
-        );
         let event_id = self.event_count;
         let event = Event {
             id: event_id,
@@ -62,9 +64,14 @@ impl SimulationState {
             dest,
             data: Box::new(data),
         };
-        self.events.push(event);
-        self.event_count += 1;
-        event_id
+        if delay >= 0. {
+            self.events.push(event);
+            self.event_count += 1;
+            event_id
+        } else {
+            log_incorrect_event(event, &format!("negative delay {}", delay));
+            panic!("Event delay is negative! It is not allowed to add events from the past.");
+        }
     }
 
     pub fn next_event(&mut self) -> Option<Event> {
@@ -86,6 +93,17 @@ impl SimulationState {
 
     pub fn cancel_event(&mut self, id: EventId) {
         self.canceled_events.insert(id);
+    }
+
+    pub fn cancel_events<F>(&mut self, pred: F)
+    where
+        F: Fn(&Event) -> bool,
+    {
+        for event in self.events.iter() {
+            if pred(event) {
+                self.canceled_events.insert(event.id);
+            }
+        }
     }
 
     pub fn event_count(&self) -> u64 {

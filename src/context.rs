@@ -7,7 +7,7 @@ use rand::distributions::uniform::{SampleRange, SampleUniform};
 use rand::prelude::Distribution;
 
 use crate::component::Id;
-use crate::event::{EventData, EventId};
+use crate::event::{Event, EventData, EventId};
 use crate::state::SimulationState;
 
 /// A facade for accessing the simulation state and producing events from simulation components.
@@ -127,6 +127,12 @@ impl SimulationContext {
         self.sim_state.borrow_mut().sample_from_distribution(dist)
     }
 
+    /// Returns a random alphanumeric string of specified length
+    /// using the simulation-wide random number generator.
+    pub fn random_string(&mut self, len: usize) -> String {
+        self.sim_state.borrow_mut().random_string(len)
+    }
+
     /// Creates new event with specified payload, destination and delay, returns event id.
     ///
     /// The event time will be `current_time + delay`.
@@ -244,7 +250,7 @@ impl SimulationContext {
     where
         T: EventData,
     {
-        self.sim_state.borrow_mut().add_event(data, self.id.clone(), dest, 0.)
+        self.sim_state.borrow_mut().add_event(data, self.id, dest, 0.)
     }
 
     /// Creates new event for itself with specified payload and delay, returns event id.
@@ -440,6 +446,37 @@ impl SimulationContext {
     /// ```
     pub fn cancel_event(&mut self, id: EventId) {
         self.sim_state.borrow_mut().cancel_event(id);
+    }
+
+    /// Cancels events that satisfy the given predicate function.
+    ///
+    /// Note that already processed events cannot be cancelled.
+    ///
+    /// # Examples
+    ///
+    /// ```rust
+    /// use serde::Serialize;
+    /// use dslab_core::{Event, Simulation, SimulationContext};
+    ///
+    /// #[derive(Serialize)]
+    /// pub struct SomeEvent {
+    /// }
+    ///
+    /// let mut sim = Simulation::new(123);
+    /// let mut comp1_ctx = sim.create_context("comp1");
+    /// let mut comp2_ctx = sim.create_context("comp2");
+    /// let event1 = comp1_ctx.emit(SomeEvent{}, comp2_ctx.id(), 1.0);
+    /// let event2 = comp1_ctx.emit(SomeEvent{}, comp2_ctx.id(), 2.0);
+    /// let event2 = comp1_ctx.emit(SomeEvent{}, comp2_ctx.id(), 3.0);
+    /// comp1_ctx.cancel_events(|e| e.id < 2);
+    /// sim.step();
+    /// assert_eq!(sim.time(), 3.0);
+    /// ```
+    pub fn cancel_events<F>(&mut self, pred: F)
+    where
+        F: Fn(&Event) -> bool,
+    {
+        self.sim_state.borrow_mut().cancel_events(pred);
     }
 
     /// Returns component name by its identifier.
