@@ -1,7 +1,7 @@
 use futures::{select, FutureExt};
 use serde::Serialize;
 
-use dslab_core::Simulation;
+use simcore::Simulation;
 
 #[derive(Clone, Serialize)]
 struct TestEvent {

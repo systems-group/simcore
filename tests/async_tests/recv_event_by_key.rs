@@ -2,8 +2,8 @@ use std::rc::Rc;
 
 use serde::Serialize;
 
-use dslab_core::async_mode::EventKey;
-use dslab_core::{cast, Event, Simulation, SimulationContext, StaticEventHandler};
+use simcore::async_mode::EventKey;
+use simcore::{cast, Event, Simulation, SimulationContext, StaticEventHandler};
 
 #[derive(Clone, Serialize)]
 struct TestEvent {

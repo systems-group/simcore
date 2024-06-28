@@ -1,4 +1,4 @@
-use dslab_core::async_mode_enabled;
+use simcore::async_mode_enabled;
 
 mod simulation;
 

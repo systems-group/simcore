@@ -6,7 +6,7 @@ use std::rc::Rc;
 
 use serde::Serialize;
 
-use dslab_core::{Event, EventCancellationPolicy, EventHandler, EventId, Simulation};
+use simcore::{Event, EventCancellationPolicy, EventHandler, EventId, Simulation};
 
 #[derive(Clone, Serialize)]
 struct TestEvent {}

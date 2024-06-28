@@ -1,6 +1,6 @@
 use futures::{stream::FuturesUnordered, StreamExt};
 
-use dslab_core::Simulation;
+use simcore::Simulation;
 
 #[test]
 fn test_sleep() {

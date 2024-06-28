@@ -18,7 +18,7 @@ pub trait EventHandler {
     /// use std::cell::RefCell;
     /// use std::rc::Rc;
     /// use serde::Serialize;
-    /// use dslab_core::{cast, Event, EventHandler, Simulation, SimulationContext};
+    /// use simcore::{cast, Event, EventHandler, Simulation, SimulationContext};
     ///
     /// #[derive(Clone, Serialize)]
     /// struct SomeEvent {
@@ -67,7 +67,7 @@ pub trait EventHandler {
 /// use std::cell::RefCell;
 /// use std::rc::Rc;
 /// use serde::Serialize;
-/// use dslab_core::{cast, Event, EventHandler, Simulation, SimulationContext};
+/// use simcore::{cast, Event, EventHandler, Simulation, SimulationContext};
 ///
 /// #[derive(Clone, Serialize)]
 /// struct SomeEvent {

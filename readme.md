@@ -1,11 +1,9 @@
-# DSLab Simulation Core
+# SimCore
 
-A compact library for discrete-event simulation.
-
-This library provides a generic discrete-event simulation engine. It can be used to implement arbitrary simulations
-consisting of user-defined _components_ producing and consuming user-defined _events_. It serves as a foundation for
-other parts of DSLab framework. Being generic and versatile, it can also be used outside DSLab and distributed systems
-domain.
+SimCore is discrete event simulation framework aimed to provide a solid foundation for building simulation models of 
+distributed systems. The framework is built around a generic event-driven programming model that can be used to build 
+simulators in different domains even beyond distributed systems. The offered programming model allows to use both 
+callbacks and asynchronous waiting to conveniently model any execution logic.
 
 The simulation is configured and managed via [`Simulation`], which includes methods for registering simulation
 components, stepping through the simulation, obtaining the current simulation time, etc. The library manages simulation
@@ -30,13 +28,13 @@ for further processing. It is also possible to cancel the previously emitted eve
 The library also provides convenient facilities for logging of events or arbitrary messages during the simulation with
 inclusion of component names, logging levels, etc.
 
-## Examples
+## Example
 
 ```rust
 use std::cell::RefCell;
 use std::rc::Rc;
 use serde::Serialize;
-use dslab_core::{cast, Event, EventHandler, Id, Simulation, SimulationContext};
+use simcore::{cast, Event, EventHandler, Id, Simulation, SimulationContext};
 
 // Event data types (should implement Serialize)
 #[derive(Clone, Serialize)]
