@@ -1,0 +1,8 @@
+# Rust
+debug/
+target/
+**/*.rs.bk
+*.pdb
+
+# IDE
+.idea/
