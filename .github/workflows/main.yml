@@ -1,0 +1,64 @@
+name: CI
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+env:
+  CARGO_TERM_COLOR: always
+
+jobs:
+  fmt:
+    name: Rustfmt
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      - name: Install Rust toolchain
+        uses: actions-rs/toolchain@v1
+        with:
+          toolchain: stable
+          profile: minimal
+          override: true
+          components: rustfmt
+
+      - name: Run rustfmt
+        run: cargo fmt --all -- --check
+
+  build:
+    name: Build and test
+    runs-on: ubuntu-latest
+    steps:
+      - name: Install needed packages
+        uses: awalsh128/cache-apt-pkgs-action@latest
+        with:
+          packages: libpango1.0-dev libatk1.0-dev libgtk-3-dev
+          version: 1.0
+
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      - name: Install Rust toolchain
+        uses: actions-rs/toolchain@v1
+        with:
+          toolchain: stable
+          profile: minimal
+          override: true
+          components: clippy
+
+      - name: Cache cargo artifacts
+        uses: Swatinem/rust-cache@v2
+
+      - name: Build
+        run: cargo build --verbose
+
+      - name: Run linter
+        run: cargo clippy -- -D warnings
+
+      - name: Run tests
+        run: |
+          cargo test --verbose
+          cargo test --features async_mode --verbose
