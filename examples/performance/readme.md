@@ -6,10 +6,10 @@ Profiling programs is a very efficient way to figure out what parts of a program
 
 In this example we demonstrate the simple possible performance improvement of programs using SimCore. There are two ways of emitting events to the simulation: 
 
-1. Using [`emit`](simcore::SimulationContext::emit) functions from [`SimulationContext`](simcore::SimulationContext). This way uses `BinaryHeap` to store and order incoming events.
-2. Using [`emit_ordered`](simcore::SimulationContext::emit_ordered) functions from [`SimulationContext`](simcore::SimulationContext). This approach relies on user-side ordering of events and a `VecDeque` is used to store events.
+1. Using `SimulationContext::emit...` methods. This way uses `BinaryHeap` to store and order incoming events.
+2. Using `SimulationContext::emit_ordered...` methods. This approach relies on user-side ordering of events and a `VecDeque` is used to store events.
 
-In case simulation contains a component that emits already ordered events (like [`Server`](components::Server) in this example), the performance of the whole simulation may be significantly improved by using `emit_ordered` instead of `emit`.
+In case simulation contains a component that emits already ordered events (like `Server` in this example), the performance of the whole simulation may be significantly improved by using `emit_ordered` instead of `emit`.
 
 ### cargo-flamegraph 
 
@@ -40,7 +40,7 @@ Both commands produce interactive `flamegraph.svg` that can be viewed using any 
 
 ### Comparing results 
 
-By launching the provided example with different arguments, you will see how [`emit_ordered`](simcore::SimulationContext::emit_ordered) is more efficient than [`emit`](simcore::SimulationContext::emit).
+By launching the provided example with different arguments, you will see how `emit_ordered` is more efficient than `emit`.
 
 Here are some possible launch configurations: 
 1. Debug mode with `emit`: 
