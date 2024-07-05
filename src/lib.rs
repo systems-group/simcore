@@ -1,6 +1,6 @@
 #![warn(missing_docs)]
 #![allow(clippy::needless_doctest_main)]
-#![doc = include_str!("../../readme.md")]
+#![doc = include_str!("../readme.md")]
 
 pub mod async_mode;
 pub mod component;
