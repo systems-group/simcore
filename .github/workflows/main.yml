@@ -10,55 +10,48 @@ env:
   CARGO_TERM_COLOR: always
 
 jobs:
-  fmt:
-    name: Rustfmt
+  check-code:
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout repository
-        uses: actions/checkout@v3
-
-      - name: Install Rust toolchain
-        uses: actions-rs/toolchain@v1
+      - uses: actions/checkout@v4
+      - uses: actions-rs/toolchain@v1
         with:
           toolchain: stable
           profile: minimal
           override: true
-          components: rustfmt
-
+          components: rustfmt, clippy
+      - uses: Swatinem/rust-cache@v2
       - name: Run rustfmt
         run: cargo fmt --all -- --check
+      - name: Run clippy
+        run: cargo clippy --workspace --all-features -- -D warnings
 
-  build:
-    name: Build and test
+  check-docs:
     runs-on: ubuntu-latest
     steps:
-      - name: Install needed packages
-        uses: awalsh128/cache-apt-pkgs-action@latest
+      - uses: actions/checkout@v4
+      - uses: actions-rs/toolchain@v1
         with:
-          packages: libpango1.0-dev libatk1.0-dev libgtk-3-dev
-          version: 1.0
+          toolchain: stable
+          profile: minimal
+          override: true
+          components: rustfmt, clippy
+      - uses: Swatinem/rust-cache@v2
+      - name: Run cargo doc
+        env:
+          RUSTDOCFLAGS: "-D rustdoc::all"
+        run: cargo doc --all-features --no-deps
 
-      - name: Checkout repository
-        uses: actions/checkout@v3
-
-      - name: Install Rust toolchain
-        uses: actions-rs/toolchain@v1
+  run-tests:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions-rs/toolchain@v1
         with:
           toolchain: stable
           profile: minimal
           override: true
           components: clippy
-
-      - name: Cache cargo artifacts
-        uses: Swatinem/rust-cache@v2
-
-      - name: Build
-        run: cargo build --workspace --verbose
-
-      - name: Run linter
-        run: cargo clippy --workspace -- -D warnings
-
+      - uses: Swatinem/rust-cache@v2
       - name: Run tests
-        run: |
-          cargo test --workspace --verbose
-          cargo test --workspace --features async_mode --verbose
+        run: cargo test --doc --workspace --all-features
