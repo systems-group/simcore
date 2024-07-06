@@ -74,49 +74,49 @@
 //! use std::rc::Rc;
 //! use serde::Serialize;
 //! use simcore::{cast, Event, EventHandler, Id, Simulation, SimulationContext};
-//! 
+//!
 //! // Event data types (must implement Clone and Serialize)
 //! #[derive(Clone, Serialize)]
 //! struct Request {
 //!     time: f64,
 //! }
-//! 
+//!
 //! #[derive(Clone, Serialize)]
 //! struct Response {
 //!     req_time: f64,
 //! }
-//! 
+//!
 //! // Implementation of component which processes the above events
 //! struct Process {
 //!     net_delay: f64,
 //!     // Generally components store the context inside to be able to emit events, etc.
 //!     ctx: SimulationContext,
 //! }
-//! 
+//!
 //! impl Process {
 //!     pub fn new(net_delay: f64, ctx: SimulationContext) -> Self {
 //!         Self { net_delay, ctx }
 //!     }
-//! 
+//!
 //!     fn send_request(&self, dst: Id) {
 //!         // Emit Request event to another process with network delay
 //!         self.ctx.emit(Request { time: self.ctx.time() }, dst, self.net_delay);
 //!     }
-//! 
+//!
 //!     fn on_request(&self, src: Id, req_time: f64) {
 //!         // Generate the random request processing delay
 //!         let proc_delay = self.ctx.gen_range(0.5..1.0);
 //!         // Emit Response event to another process with processing + network delay
 //!         self.ctx.emit(Response { req_time }, src, proc_delay + self.net_delay);
 //!     }
-//! 
+//!
 //!     fn on_response(&self, req_time: f64) {
 //!         // Calculate and print the response time
 //!         let response_time = self.ctx.time() - req_time;
 //!         println!("Response time: {:.2}", response_time);
 //!     }
 //! }
-//! 
+//!
 //! // Components can receive events by implementing EventHandler trait
 //! impl EventHandler for Process {
 //!     // This method is invoked to deliver an event to the component
@@ -132,11 +132,11 @@
 //!         })
 //!     }
 //! }
-//! 
+//!
 //! fn main() {
 //!     // Create simulation with random seed 123
 //!     let mut sim = Simulation::new(123);
-//! 
+//!
 //!     // Create and register components
 //!     let proc1 = Process::new(0.1, sim.create_context("proc1"));
 //!     let proc1_ref = Rc::new(RefCell::new(proc1));
@@ -144,10 +144,10 @@
 //!     let proc2 = Process::new(0.1, sim.create_context("proc2"));
 //!     let proc2_ref = Rc::new(RefCell::new(proc2));
 //!     let proc2_id = sim.add_handler("proc2", proc2_ref);
-//! 
+//!
 //!     // Ask proc1 to send request to proc2
 //!     proc1_ref.borrow().send_request(proc2_id);
-//! 
+//!
 //!     // Run simulation until there are no pending events and print the final simulation time
 //!     sim.step_until_no_events();
 //!     println!("Simulation time: {:.2}", sim.time());
@@ -184,12 +184,12 @@
 //! components to happen only via events. This is in contrast to similar but more strict models such as actor model for
 //! message passing.
 //!
-//! The described interfaces deal only with calling SimCore from a user's code. However, the framework should also be 
-//! able to call user's components to notify them about occurred events. There are two supported approaches for 
-//! programming this logic described below. 
-//! 
+//! The described interfaces deal only with calling SimCore from a user's code. However, the framework should also be
+//! able to call user's components to notify them about occurred events. There are two supported approaches for
+//! programming this logic described below.
+//!
 //! ## Receiving Events via Callbacks
-//! 
+//!
 //! The default approach for receiving events in components is based on implementing the
 //! [`EventHandler`] interface. This interface contains a single [`on`](crate::EventHandler::on)
 //! method which is called by the framework to pass an event to the destination component. This approach is illustrated
@@ -197,7 +197,7 @@
 //! events. The pattern matching syntax is used to identify the type of received event. When a component implements the
 //! [`EventHandler`] interface it must be registered in the framework via the
 //! [`Simulation::add_handler`](crate::Simulation::add_handler) method.
-//! 
+//!
 //! Consider in detail the provided example. It describes a simulation model consisting of two components `proc1` and
 //! `proc2`. The behavior of these components is defined by the `Process` type. This type implements the
 //! [`EventHandler`] interface to receive and process events of two types: `Request` and `Response`:
@@ -205,14 +205,14 @@
 //! - The logic for processing `Request` is defined in the `on_request` callback method - the process emits `Response`
 //! to the source of `Request` with some delay including the random request processing time and the network delay. The
 //! request sending time stored in `Request` is copied to the corresponding `Response`.
-//! 
+//!
 //! - The logic for processing `Response` is defined in the `on_response` callback method - the process reads the
 //! request time from `Response` to calculate and print the response time, i.e. the time elapsed between the sending
 //! of request and receiving the response.
-//! 
+//!
 //! The process implementation also includes the `send_request` method to trigger emitting of `Request` to another
 //! process.
-//! 
+//!
 //! The example models a simple scenario where `proc1` emits a request to `proc2` and the simulation runs until `proc1`
 //! receives a response.
 //!
@@ -242,36 +242,36 @@
 //! the callback-based approach.
 //!
 //! The code below illustrates the use of async mode to improve the previously described callback-based implementation.
-//! 
+//!
 //! ```rust
 //! use std::rc::Rc;
 //! use serde::Serialize;
 //! use simcore::{cast, Event, Id, Simulation, SimulationContext, StaticEventHandler};
-//! 
+//!
 //! // Event data types (must implement Clone and Serialize)
 //! #[derive(Clone, Serialize)]
 //! struct Request {}
-//! 
+//!
 //! #[derive(Clone, Serialize)]
 //! struct Response {}
-//! 
+//!
 //! // Implementation of component which processes the above events
 //! struct Process {
 //!     net_delay: f64,
 //!     // Generally components store the context inside to be able to emit events, etc.
 //!     ctx: SimulationContext,
 //! }
-//! 
+//!
 //! impl Process {
 //!     pub fn new(net_delay: f64, ctx: SimulationContext) -> Self {
 //!         Self { net_delay, ctx }
 //!     }
-//! 
+//!
 //!     fn send_request(self: Rc<Self>, dst: Id) {
 //!         // Spawn asynchronous activity for sending request and receiving response
 //!         self.ctx.spawn(self.clone().send_request_and_get_response(dst))
 //!     }
-//! 
+//!
 //!     async fn send_request_and_get_response(self: Rc<Self>, dst: Id) {
 //!         let send_time = self.ctx.time();
 //!         // Emit Request event to another process with network delay
@@ -282,7 +282,7 @@
 //!         let response_time = self.ctx.time() - send_time;
 //!         println!("Response time: {:.2}", response_time);
 //!     }
-//! 
+//!
 //!     async fn process_request(self: Rc<Self>, src: Id) {
 //!         // Model random request processing time using sleep()
 //!         self.ctx.sleep(self.ctx.gen_range(0.5..1.0)).await;
@@ -290,7 +290,7 @@
 //!         self.ctx.emit(Response {}, src, self.net_delay);
 //!     }
 //! }
-//! 
+//!
 //! // When using async mode, components must implement the StaticEventHandler trait
 //! impl StaticEventHandler for Process {
 //!     // This method is invoked to deliver an event to the component
@@ -305,11 +305,11 @@
 //!         })
 //!     }
 //! }
-//! 
+//!
 //! fn main() {
 //!     // Create simulation with random seed 123
 //!     let mut sim = Simulation::new(123);
-//! 
+//!
 //!     // Create and register components
 //!     let proc1 = Process::new(0.1, sim.create_context("proc1"));
 //!     let proc1_ref = Rc::new(proc1);
@@ -319,10 +319,10 @@
 //!     let proc2 = Process::new(0.1, sim.create_context("proc2"));
 //!     let proc2_ref = Rc::new(proc2);
 //!     let proc2_id = sim.add_static_handler("proc2", proc2_ref);
-//! 
+//!
 //!     // Ask proc1 to send request to proc2
 //!     proc1_ref.send_request(proc2_id);
-//! 
+//!
 //!     // Run simulation until there are no pending events and print the final simulation time
 //!     sim.step_until_no_events();
 //!     println!("Simulation time: {:.2}", sim.time());
