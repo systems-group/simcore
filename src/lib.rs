@@ -156,16 +156,16 @@
 //!
 //! ## Programming Interfaces
 //!
-//! [`Simulation`] is the main interface of the framework which allows to configure and execute a
-//! simulation model. As demonstrated in the example above, it can be instantiated with a user-defined random seed and
-//! then used to create simulation contexts and register event handlers for components of user-defined type `Process`,
-//! run the simulation and obtain the current simulation time. Besides the
-//! [`step_until_no_events`](crate::Simulation::step_until_no_events) method, it provides other methods for precise
-//! stepping through the simulation. It also provides access to the simulation-wide random number generator which is
-//! initialized with the user-defined seed to support deterministic simulations.
+//! [`Simulation`] is the main interface of the framework which allows to configure and execute a simulation model. As
+//! demonstrated in the example above, it can be instantiated with a user-defined random seed and then used to create
+//! simulation contexts and register event handlers for components of user-defined type `Process`, run the simulation
+//! and obtain the current simulation time. Besides the [`step_until_no_events`](crate::Simulation::step_until_no_events)
+//! method, it provides other methods for precise stepping through the simulation. It also provides access to the
+//! simulation-wide random number generator which is initialized with the user-defined seed to support deterministic
+//! simulations.
 //!
-//! [`SimulationContext`] is the interface for accessing the simulation state and emitting
-//! events from components. Each component is associated with a uniquely named context which is created via the
+//! [`SimulationContext`] is the interface for accessing the simulation state and emitting events from components. Each
+//! component is associated with a uniquely named context which is created via the
 //! [`Simulation::create_context`](crate::Simulation::create_context) method. The context is typically passed to the
 //! component's constructor and is stored inside the component as illustrated in the example above. This example also
 //! illustrates the use of the stored context to emit the user-defined events `Request` and `Response`, to obtain the
@@ -190,13 +190,12 @@
 //!
 //! ## Receiving Events via Callbacks
 //!
-//! The default approach for receiving events in components is based on implementing the
-//! [`EventHandler`] interface. This interface contains a single [`on`](crate::EventHandler::on)
-//! method which is called by the framework to pass an event to the destination component. This approach is illustrated
-//! in the example above where the `Process` component implements this interface to receive `Request` and `Response`
-//! events. The pattern matching syntax is used to identify the type of received event. When a component implements the
-//! [`EventHandler`] interface it must be registered in the framework via the
-//! [`Simulation::add_handler`](crate::Simulation::add_handler) method.
+//! The default approach for receiving events in components is based on implementing the [`EventHandler`] interface.
+//! This interface contains a single [`on`](crate::EventHandler::on) method which is called by the framework to pass an
+//! event to the destination component. This approach is illustrated in the example above where the `Process` component
+//! implements this interface to receive `Request` and `Response` events. The pattern matching syntax is used to
+//! identify the type of received event. When a component implements the [`EventHandler`] interface it must be
+//! registered in the framework via the [`Simulation::add_handler`](crate::Simulation::add_handler) method.
 //!
 //! Consider in detail the provided example. It describes a simulation model consisting of two components `proc1` and
 //! `proc2`. The behavior of these components is defined by the `Process` type. This type implements the
@@ -342,9 +341,8 @@
 //! execution for a specified time.
 //!
 //! The code for configuring and running the simulation is slightly changed. To be able to spawn asynchronous
-//! activities, components must implement the special [`StaticEventHandler`] trait and
-//! register its implementation using the [`Simulation::add_static_handler`](crate::Simulation::add_static_handler)
-//! method.
+//! activities, components must implement the special [`StaticEventHandler`] trait and register its implementation
+//! using the [`Simulation::add_static_handler`](crate::Simulation::add_static_handler) method.
 //!
 //! As demonstrated, the async mode eliminates the described limitations of the callback-based approach. This example
 //! also illustrates that SimCore allows to use both approaches simultaneously to combine their advantages. While
