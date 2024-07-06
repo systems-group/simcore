@@ -1,7 +1,7 @@
-use std::cell::RefCell;
-use std::rc::Rc;
 use serde::Serialize;
 use simcore::{cast, Event, EventHandler, Id, Simulation, SimulationContext};
+use std::cell::RefCell;
+use std::rc::Rc;
 
 // Event data types (must implement Clone and Serialize)
 #[derive(Clone, Serialize)]

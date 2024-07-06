@@ -1,6 +1,6 @@
-use std::rc::Rc;
 use serde::Serialize;
 use simcore::{cast, Event, Id, Simulation, SimulationContext, StaticEventHandler};
+use std::rc::Rc;
 
 // Event data types (must implement Clone and Serialize)
 #[derive(Clone, Serialize)]
