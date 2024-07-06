@@ -4,5 +4,5 @@ edition = "2021"
 publish = false
 
 [dependencies]
-simcore = { path = "../../simcore", features = ["async_mode"] }
+simcore = { path = "../..", features = ["async_mode"] }
 serde = { version = "1", features = ["derive"] }

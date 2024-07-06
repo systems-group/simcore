@@ -53,12 +53,12 @@ jobs:
         uses: Swatinem/rust-cache@v2
 
       - name: Build
-        run: cargo build --verbose
+        run: cargo build --workspace --verbose
 
       - name: Run linter
-        run: cargo clippy -- -D warnings
+        run: cargo clippy --workspace -- -D warnings
 
       - name: Run tests
         run: |
-          cargo test --verbose
-          cargo test --features async_mode --verbose
+          cargo test --workspace --verbose
+          cargo test --workspace --features async_mode --verbose
