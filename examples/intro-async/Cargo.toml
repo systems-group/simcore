@@ -1,5 +1,5 @@
 [package]
-name = "intro"
+name = "intro-async"
 edition = "2021"
 publish = false
 

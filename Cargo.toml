@@ -31,6 +31,10 @@ env_logger = "0.11"
 [features]
 async_mode = []
 
+[package.metadata.docs.rs]
+all-features = true
+rustdoc-args = ["--cfg", "docsrs"]
+
 [workspace]
 members = [
     "examples/*"

@@ -1,0 +1,8 @@
+[package]
+name = "intro-callbacks"
+edition = "2021"
+publish = false
+
+[dependencies]
+simcore = { path = "../.." }
+serde = { version = "1", features = ["derive"] }
