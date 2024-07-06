@@ -28,10 +28,11 @@ async_mode_enabled!(
 );
 
 async_mode_disabled!(
-    /// Represents a simulation, provides methods for its configuration and execution.
-    pub struct Simulation {
-        sim_state: Rc<RefCell<SimulationState>>,
-        handlers: Vec<Option<Rc<RefCell<dyn EventHandler>>>>,
+    type Handlers = Vec<Option<Rc<RefCell<dyn EventHandler>>>>;
+    struct Executor;
+
+    fn build_inner(seed: u64) -> (SimulationState, Executor) {
+        (SimulationState::new(seed), Executor {})
     }
 );
 
@@ -40,39 +41,35 @@ async_mode_enabled!(
         Mutable(Rc<RefCell<dyn EventHandler>>),
         Static(Rc<dyn StaticEventHandler>),
     }
+    type Handlers = Vec<Option<EventHandlerImpl>>;
 
-    /// Represents a simulation, provides methods for its configuration and execution.
-    pub struct Simulation {
-        sim_state: Rc<RefCell<SimulationState>>,
-        handlers: Vec<Option<EventHandlerImpl>>,
-        // Specific to async mode
-        executor: Executor,
+    fn build_inner(seed: u64) -> (SimulationState, Executor) {
+        let (task_sender, task_receiver) = channel();
+        let sim_state = SimulationState::new(seed, task_sender);
+        let executor = Executor::new(task_receiver);
+        (sim_state, executor)
     }
 );
 
-impl Simulation {
-    async_mode_disabled!(
-        /// Creates a new simulation with specified random seed.
-        pub fn new(seed: u64) -> Self {
-            Self {
-                sim_state: Rc::new(RefCell::new(SimulationState::new(seed))),
-                handlers: Vec::new(),
-            }
-        }
-    );
+/// Represents a simulation, provides methods for its configuration and execution.
+pub struct Simulation {
+    sim_state: Rc<RefCell<SimulationState>>,
+    handlers: Handlers,
+    // Specific to async mode
+    #[allow(dead_code)]
+    executor: Executor,
+}
 
-    async_mode_enabled!(
-        /// Creates a new simulation with specified random seed.
-        pub fn new(seed: u64) -> Self {
-            let (task_sender, task_receiver) = channel();
-            Self {
-                sim_state: Rc::new(RefCell::new(SimulationState::new(seed, task_sender))),
-                handlers: Vec::new(),
-                // Specific to async mode
-                executor: Executor::new(task_receiver),
-            }
+impl Simulation {
+    /// Creates a new simulation with specified random seed.
+    pub fn new(seed: u64) -> Self {
+        let (sim_state, executor) = build_inner(seed);
+        Self {
+            sim_state: Rc::new(RefCell::new(sim_state)),
+            handlers: Vec::new(),
+            executor,
         }
-    );
+    }
 
     fn register(&mut self, name: &str) -> Id {
         let id = self.sim_state.borrow_mut().register(name);
