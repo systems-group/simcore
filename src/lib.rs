@@ -360,7 +360,7 @@
 
 #![warn(missing_docs)]
 #![allow(clippy::needless_doctest_main)]
-#![cfg_attr(docsrs, feature(doc_cfg, doc_auto_cfg))]
+#![cfg_attr(docsrs, feature(doc_auto_cfg))]
 
 pub mod async_mode;
 pub mod component;
