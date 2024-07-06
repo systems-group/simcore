@@ -358,9 +358,9 @@
 //! On the downside, async mode has additional performance overhead in comparison to callbacks. The observed slowdown
 //! depends on an application and is around 10-50% according to our experience.
 
-#![cfg_attr(docsrs, feature(doc_auto_cfg))]
 #![warn(missing_docs)]
 #![allow(clippy::needless_doctest_main)]
+#![cfg_attr(docsrs, feature(doc_cfg, doc_auto_cfg))]
 
 pub mod async_mode;
 pub mod component;
