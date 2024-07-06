@@ -1,3 +1,3 @@
-# SimCore Programming Intro (Async Mode)
+# SimCore Programming Intro (Callbacks)
 
-This is example from SimCore documentation demonstrating the use of async mode.
+This is example from SimCore documentation demonstrating the callback-based approach.
