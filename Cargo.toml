@@ -2,7 +2,7 @@
 name = "simcore"
 version = "0.1.0"
 edition = "2021"
-description = "A generic discrete event simulation framework"
+description = "A generic discrete-event simulation framework"
 readme = "readme.md"
 homepage = "https://github.com/systems-group/simcore"
 repository = "https://github.com/systems-group/simcore"

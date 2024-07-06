@@ -1,6 +1,6 @@
-//! SimCore is discrete event simulation framework aimed to provide a solid foundation for building simulation models
-//! of distributed systems. The framework is built around a generic event-driven programming model that can be used to
-//! model different domains even beyond distributed systems. It allows to use both callbacks and asynchronous waiting to
+//! SimCore is discrete-event simulation framework aimed to provide a solid foundation for building simulation models
+//! of distributed and other kinds of systems. The framework is built around a generic event-driven programming model
+//! that can be used to model different domains. It allows to use both callbacks and asynchronous waiting to
 //! conveniently model any execution logic.
 //!
 //! ## Contents
