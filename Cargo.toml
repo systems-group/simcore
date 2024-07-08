@@ -39,6 +39,10 @@ members = [
     "examples/*"
 ]
 
+[[example]]
+name = "intro-async"
+required-features = ["async_mode"]
+
 [profile.release-debug]
 inherits = "release"
 debug = true

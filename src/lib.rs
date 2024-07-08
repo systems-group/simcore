@@ -70,7 +70,7 @@
 //! next sections for details and an alternative to callback-based approach.
 //!
 //! ```rust
-#![doc = include_str!("../examples/intro-callbacks/src/main.rs")]
+#![doc = include_str!("../examples/intro-callbacks.rs")]
 //!```
 //!
 //! ## Programming Interfaces
@@ -162,7 +162,7 @@
 //! The code below illustrates the use of async mode to improve the previously described callback-based implementation.
 //!
 //! ```rust
-#![doc = include_str!("../examples/intro-async/src/main.rs")]
+#![doc = include_str!("../examples/intro-async.rs")]
 //!```
 //!
 //! First, the sending of request and receiving of response are now conveniently located in a single
