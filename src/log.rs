@@ -1,6 +1,7 @@
 //! Logging facilities.
 
-use atty::Stream;
+use std::io::IsTerminal;
+
 use colored::{Color, ColoredString, Colorize};
 use log::error;
 use serde_json::json;
@@ -10,7 +11,7 @@ use crate::event::Event;
 
 /// Applies the color to the string if stderr (log) goes to console.
 pub fn get_colored(s: &str, color: Color) -> ColoredString {
-    if atty::is(Stream::Stderr) {
+    if std::io::stderr().is_terminal() {
         s.color(color)
     } else {
         s.normal()
