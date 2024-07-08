@@ -9,6 +9,7 @@ repository = "https://github.com/systems-group/simcore"
 license = "MIT OR Apache-2.0"
 keywords = ["simulation", "discrete-event", "framework", "distributed-systems", "async"]
 categories = ["simulation", "asynchronous"]
+include = ["/src", "/tests", "/examples", "LICENSE*", "changelog.md"]
 
 [dependencies]
 downcast-rs = "1.2"
