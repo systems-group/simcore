@@ -18,7 +18,7 @@ pub trait EventHandler {
     /// use std::cell::RefCell;
     /// use std::rc::Rc;
     /// use serde::Serialize;
-    /// use dslab_core::{cast, Event, EventHandler, Simulation, SimulationContext};
+    /// use simcore::{cast, Event, EventHandler, Simulation, SimulationContext};
     ///
     /// #[derive(Clone, Serialize)]
     /// struct SomeEvent {
@@ -67,7 +67,7 @@ pub trait EventHandler {
 /// use std::cell::RefCell;
 /// use std::rc::Rc;
 /// use serde::Serialize;
-/// use dslab_core::{cast, Event, EventHandler, Simulation, SimulationContext};
+/// use simcore::{cast, Event, EventHandler, Simulation, SimulationContext};
 ///
 /// #[derive(Clone, Serialize)]
 /// struct SomeEvent {
@@ -135,7 +135,7 @@ pub enum EventCancellationPolicy {
 }
 
 async_mode_enabled!(
-    /// Alternative trait for consuming events in simulation components.
+    /// Alternative trait for consuming events in async mode.
     ///
     /// This trait supports spawning asynchronous tasks using component's context.
     /// See [`SimulationContext::spawn`](crate::context::SimulationContext::spawn) examples.

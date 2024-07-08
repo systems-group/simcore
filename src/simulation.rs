@@ -89,7 +89,7 @@ impl Simulation {
     /// # Examples
     ///
     /// ```rust
-    /// use dslab_core::Simulation;
+    /// use simcore::Simulation;
     ///
     /// let mut sim = Simulation::new(123);
     /// let comp_ctx = sim.create_context("comp");
@@ -98,7 +98,7 @@ impl Simulation {
     /// ```
     ///
     /// ```should_panic
-    /// use dslab_core::Simulation;
+    /// use simcore::Simulation;
     ///
     /// let mut sim = Simulation::new(123);
     /// let comp_ctx = sim.create_context("comp");
@@ -115,7 +115,7 @@ impl Simulation {
     /// # Examples
     ///
     /// ```rust
-    /// use dslab_core::Simulation;
+    /// use simcore::Simulation;
     ///
     /// let mut sim = Simulation::new(123);
     /// let comp_ctx = sim.create_context("comp");
@@ -124,7 +124,7 @@ impl Simulation {
     /// ```
     ///
     /// ```should_panic
-    /// use dslab_core::Simulation;
+    /// use simcore::Simulation;
     ///
     /// let mut sim = Simulation::new(123);
     /// let comp_ctx = sim.create_context("comp");
@@ -139,7 +139,7 @@ impl Simulation {
     /// # Examples
     ///
     /// ```rust
-    /// use dslab_core::Simulation;
+    /// use simcore::Simulation;
     ///
     /// let mut sim = Simulation::new(123);
     /// let comp_ctx = sim.create_context("comp");
@@ -168,7 +168,7 @@ impl Simulation {
     /// ```rust
     /// use std::cell::RefCell;
     /// use std::rc::Rc;
-    /// use dslab_core::{Event, EventHandler, Simulation, SimulationContext};
+    /// use simcore::{Event, EventHandler, Simulation, SimulationContext};
     ///
     /// struct Component {
     ///     ctx: SimulationContext,
@@ -192,7 +192,7 @@ impl Simulation {
     /// ```rust
     /// use std::cell::RefCell;
     /// use std::rc::Rc;
-    /// use dslab_core::{Event, EventHandler, Simulation, SimulationContext};
+    /// use simcore::{Event, EventHandler, Simulation, SimulationContext};
     ///
     /// struct Component {
     /// }
@@ -213,7 +213,7 @@ impl Simulation {
     /// ```compile_fail
     /// use std::cell::RefCell;
     /// use std::rc::Rc;
-    /// use dslab_core::{Simulation, SimulationContext};
+    /// use simcore::{Simulation, SimulationContext};
     ///
     /// pub struct Component {
     ///     ctx: SimulationContext,
@@ -302,7 +302,7 @@ impl Simulation {
     /// ```rust
     /// use std::cell::RefCell;
     /// use std::rc::Rc;
-    /// use dslab_core::{Event, EventCancellationPolicy, EventHandler, Simulation, SimulationContext};
+    /// use simcore::{Event, EventCancellationPolicy, EventHandler, Simulation, SimulationContext};
     ///
     /// struct Component {
     /// }
@@ -364,7 +364,7 @@ impl Simulation {
     ///
     /// ```rust
     /// use serde::Serialize;
-    /// use dslab_core::Simulation;
+    /// use simcore::Simulation;
     ///
     /// #[derive(Clone, Serialize)]
     /// struct SomeEvent {
@@ -394,7 +394,7 @@ impl Simulation {
     ///
     /// ```rust
     /// use serde::Serialize;
-    /// use dslab_core::Simulation;
+    /// use simcore::Simulation;
     ///
     /// #[derive(Clone, Serialize)]
     /// struct SomeEvent {
@@ -542,7 +542,7 @@ impl Simulation {
         /// # Examples
         ///
         /// ```rust
-        /// use dslab_core::Simulation;
+        /// use simcore::Simulation;
         ///
         /// let mut sim = Simulation::new(123);
         ///
@@ -583,8 +583,8 @@ impl Simulation {
         /// ```rust
         /// use std::rc::Rc;
         /// use std::cell::RefCell;
-        /// use dslab_core::{Simulation, SimulationContext, Event, StaticEventHandler};
-        /// use dslab_core::async_mode::UnboundedQueue;
+        /// use simcore::{Simulation, SimulationContext, Event, StaticEventHandler};
+        /// use simcore::async_mode::UnboundedQueue;
         ///
         /// struct Message {
         ///     payload: u32,
@@ -653,7 +653,7 @@ impl Simulation {
     ///
     /// ```rust
     /// use serde::Serialize;
-    /// use dslab_core::Simulation;
+    /// use simcore::Simulation;
     ///
     /// #[derive(Clone, Serialize)]
     /// struct SomeEvent {
@@ -689,7 +689,7 @@ impl Simulation {
     ///
     /// ```rust
     /// use serde::Serialize;
-    /// use dslab_core::Simulation;
+    /// use simcore::Simulation;
     ///
     /// #[derive(Clone, Serialize)]
     /// struct SomeEvent {
@@ -723,7 +723,7 @@ impl Simulation {
     ///
     /// ```rust
     /// use serde::Serialize;
-    /// use dslab_core::Simulation;
+    /// use simcore::Simulation;
     ///
     /// #[derive(Clone, Serialize)]
     /// struct SomeEvent {
@@ -760,7 +760,7 @@ impl Simulation {
     ///
     /// ```rust
     /// use serde::Serialize;
-    /// use dslab_core::Simulation;
+    /// use simcore::Simulation;
     ///
     /// #[derive(Clone, Serialize)]
     /// struct SomeEvent {
@@ -842,7 +842,7 @@ impl Simulation {
     /// # Examples
     ///
     /// ```rust
-    /// use dslab_core::Simulation;
+    /// use simcore::Simulation;
     ///
     /// let mut sim = Simulation::new(123);
     /// let f: f64 = sim.rand();
@@ -858,7 +858,7 @@ impl Simulation {
     /// # Examples
     ///
     /// ```rust
-    /// use dslab_core::Simulation;
+    /// use simcore::Simulation;
     ///
     /// let mut sim = Simulation::new(123);
     /// let n: u32 = sim.gen_range(1..=10);
@@ -894,7 +894,7 @@ impl Simulation {
     ///
     /// ```rust
     /// use serde::Serialize;
-    /// use dslab_core::Simulation;
+    /// use simcore::Simulation;
     ///
     /// #[derive(Clone, Serialize)]
     /// struct SomeEvent {
@@ -920,7 +920,7 @@ impl Simulation {
     ///
     /// ```rust
     /// use serde::Serialize;
-    /// use dslab_core::{Event, Simulation, SimulationContext};
+    /// use simcore::{Event, Simulation, SimulationContext};
     ///
     /// #[derive(Clone, Serialize)]
     /// struct SomeEvent {
@@ -951,7 +951,7 @@ impl Simulation {
     ///
     /// ```rust
     /// use serde::Serialize;
-    /// use dslab_core::{Event, Simulation, SimulationContext};
+    /// use simcore::{Event, Simulation, SimulationContext};
     ///
     /// #[derive(Clone, Serialize)]
     /// struct SomeEvent {
@@ -983,7 +983,7 @@ impl Simulation {
     ///
     /// ```rust
     /// use serde::Serialize;
-    /// use dslab_core::{Event, Simulation, SimulationContext};
+    /// use simcore::{Event, Simulation, SimulationContext};
     ///
     /// #[derive(Clone, Serialize)]
     /// struct SomeEvent {

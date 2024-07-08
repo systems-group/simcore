@@ -1,26 +1,36 @@
 [package]
-name = "dslab-core"
+name = "simcore"
 version = "0.1.0"
-license = "MIT OR Apache-2.0"
 edition = "2021"
+description = "A generic discrete-event simulation framework"
+readme = "readme.md"
+homepage = "https://github.com/systems-group/simcore"
+repository = "https://github.com/systems-group/simcore"
+license = "MIT OR Apache-2.0"
+keywords = ["simulation", "discrete-event", "framework", "distributed-systems", "async"]
+categories = ["simulation", "asynchronous"]
 
 [dependencies]
-downcast-rs = "1.2.0"
+downcast-rs = "1.2"
 log = "0.4"
-rand = "0.8.4"
-rand_pcg = "0.3.1"
+rand = "0.8"
+rand_pcg = "0.3"
 serde = { version = "1.0", features = ["derive"] }
-erased-serde = "0.3"
+erased-serde = "0.4"
 serde_json = { version = "1.0", features = ["preserve_order"] }
-serde_type_name = "0.2.0"
+serde_type_name = "0.2"
 colored = "2"
 atty = "0.2"
-dyn-clone = "1.0.11"
+dyn-clone = "1"
 futures = "0.3"
-rustc-hash = "2.0"
+rustc-hash = "2"
 
 [dev-dependencies]
-env_logger = "0.9.0"
+env_logger = "0.11"
 
 [features]
 async_mode = []
+
+[package.metadata.docs.rs]
+all-features = true
+rustdoc-args = ["--cfg", "docsrs"]

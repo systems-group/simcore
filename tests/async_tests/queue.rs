@@ -2,7 +2,7 @@ use std::{cell::RefCell, collections::VecDeque};
 
 use futures::{stream::FuturesUnordered, FutureExt, StreamExt};
 
-use dslab_core::{async_mode::UnboundedQueue, Simulation, SimulationContext};
+use simcore::{async_mode::UnboundedQueue, Simulation, SimulationContext};
 
 struct Data {
     value: u32,

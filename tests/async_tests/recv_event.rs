@@ -3,8 +3,8 @@ use std::rc::Rc;
 
 use serde::Serialize;
 
-use dslab_core::async_mode::AwaitResult;
-use dslab_core::{cast, Event, Id, Simulation, SimulationContext, StaticEventHandler};
+use simcore::async_mode::AwaitResult;
+use simcore::{cast, Event, Id, Simulation, SimulationContext, StaticEventHandler};
 
 #[derive(Clone, Serialize)]
 struct TestEvent {

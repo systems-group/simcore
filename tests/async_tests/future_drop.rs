@@ -3,8 +3,8 @@ use std::rc::Rc;
 
 use serde::Serialize;
 
-use dslab_core::async_mode::EventKey;
-use dslab_core::{cast, EventCancellationPolicy, Simulation, SimulationContext, StaticEventHandler};
+use simcore::async_mode::EventKey;
+use simcore::{cast, EventCancellationPolicy, Simulation, SimulationContext, StaticEventHandler};
 
 #[derive(Clone, Serialize)]
 struct TestEventWithRc {
@@ -67,7 +67,7 @@ impl TestComponent {
 }
 
 impl StaticEventHandler for TestComponent {
-    fn on(self: Rc<Self>, event: dslab_core::Event) {
+    fn on(self: Rc<Self>, event: simcore::Event) {
         cast!(match event.data {
             TestEventWithRc { .. } => {
                 *self.on_handler_messages.borrow_mut() += 1;

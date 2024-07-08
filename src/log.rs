@@ -24,7 +24,7 @@ pub fn get_colored(s: &str, color: Color) -> ColoredString {
 /// ```rust
 /// use std::io::Write;
 /// use env_logger::Builder;
-/// use dslab_core::{log_info, Simulation, SimulationContext};///
+/// use simcore::{log_info, Simulation, SimulationContext};///
 ///
 /// struct Component {
 ///     ctx: SimulationContext,

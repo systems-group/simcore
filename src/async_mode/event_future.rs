@@ -64,8 +64,8 @@ impl<T: EventData> EventFuture<T> {
     ///
     /// ```rust
     /// use serde::Serialize;
-    /// use dslab_core::Simulation;
-    /// use dslab_core::async_mode::AwaitResult;
+    /// use simcore::Simulation;
+    /// use simcore::async_mode::AwaitResult;
     ///
     /// #[derive(Clone, Serialize)]
     /// struct Message {
@@ -114,8 +114,8 @@ impl<T: EventData> EventFuture<T> {
     /// use std::cell::RefCell;
     /// use std::rc::Rc;
     /// use serde::Serialize;
-    /// use dslab_core::async_mode::{AwaitResult, EventKey};
-    /// use dslab_core::{cast, Event, EventData, StaticEventHandler, Id, Simulation, SimulationContext};
+    /// use simcore::async_mode::{AwaitResult, EventKey};
+    /// use simcore::{cast, Event, EventData, StaticEventHandler, Id, Simulation, SimulationContext};
     ///
     /// #[derive(Clone, Serialize)]
     /// struct Start {}
