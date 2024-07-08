@@ -33,3 +33,17 @@ async_mode = []
 [package.metadata.docs.rs]
 all-features = true
 rustdoc-args = ["--cfg", "docsrs"]
+
+[workspace]
+members = [
+    "examples/*"
+]
+
+[profile.release-debug]
+inherits = "release"
+debug = true
+
+[profile.release-optimized]
+inherits = "release"
+codegen-units = 1
+lto = "fat"

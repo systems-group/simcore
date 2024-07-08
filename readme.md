@@ -5,6 +5,11 @@ distributed and other kinds of systems. The framework is built around a generic 
 be used to model different domains. It allows to use both callbacks and asynchronous waiting to conveniently model any
 execution logic.
 
+You may be looking for:
+
+- [Documentation](https://docs.rs/simcore/latest/simcore/)
+- [Examples](examples)
+
 ## License
 
 SimCore is licensed under the [Apache-2.0 license](LICENSE-APACHE) or the [MIT license](LICENSE-MIT), at your option.
